@@ -70,6 +70,27 @@ Storage& Storage::operator=(Storage&& other)
 	return *this;
 }
 
+
+Storage* Storage::CreateStorage(const short& nonRefrigeratedContainerCount, const short& refrigeratedContainerCount)
+{
+	Storage* storage = new Storage();
+	storage->setMaxContainerCount(CT_NonRefrigerated, nonRefrigeratedContainerCount);
+
+	for (int i = 0; i < nonRefrigeratedContainerCount; i++)
+	{
+		storage->addContainer(CT_NonRefrigerated);
+	}
+
+	storage->setMaxContainerCount(CT_Refrigerated, refrigeratedContainerCount);
+
+	for (int i = 0; i < refrigeratedContainerCount; i++)
+	{
+		storage->addContainer(CT_Refrigerated);
+	}
+
+	return storage;
+}
+
 void Storage::setMaxContainerCount(ContainerType type, int count)
 {
 	auto it = m_Count.find(type);

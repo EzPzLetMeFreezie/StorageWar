@@ -19,6 +19,8 @@ public:
 	Storage(Storage&& other);
 	Storage& operator=(Storage&& other);
 
+	static Storage* CreateStorage(const short& nonRefrigeratedContainerCount, const short& refrigeratedContainerCount);
+
 	// Set the maximum container count.
 	void setMaxContainerCount(ContainerType type, int count);
 	// add a container
