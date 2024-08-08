@@ -90,8 +90,8 @@ StorableObject* const Storage::retrieveObject(ObjectID objectID)
 void Storage::displayContainer() const
 {
 	std::printf("Display the content the storage\n");
-	for (ContainerType containerType : ContainerTypes) {
-		Pod* pod = m_Pods.at(containerType);
+	for (auto podIt = m_Pods.rbegin(); podIt != m_Pods.rend(); podIt++) {
+		Pod* pod = podIt->second;
 		std::printf("%s content:\n", pod->type.c_str());
 		for (auto container : pod->containers) {
 			if (container->getStoredObjectID() != INVALID_OBJECT_ID) {
