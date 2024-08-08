@@ -11,10 +11,10 @@ public:
 	~Gamemode();
 
 private:
-	std::vector<Player*> m_players;
-	ObjectManager* m_objectManager;
-	short m_refridgerationContainerCount = 8;
-	short m_nonRefridgerationContainerCount = 16;
+	std::vector<Player*> m_Players;
+	ObjectManager* m_ObjectManager;
+	short m_RefridgerationContainerCount = 8;
+	short m_NonRefridgerationContainerCount = 16;
 
 	void generateInitialStorageState(Storage& storage);
 	Player* playerTakeTurn(int playerIndex);
@@ -27,4 +27,6 @@ public:
 	int startGame();
 	void setRefridgerationContainerCount(short count);
 	void setNonRefridgerationContainerCount(short count);
+	Player* getPlayer(int playerIndex);
+	Player* getOpponentPlayer(int playerIndex);
 };

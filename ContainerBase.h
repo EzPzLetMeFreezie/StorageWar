@@ -26,15 +26,15 @@ static std::string ContainerTypes[(char)(EContainerType::MAX)] = {
 class ContainerBase
 {
 public:
-	ContainerBase(ContainerID id) : m_id(id), m_isEmpty(true), m_isRefrigerated(false) {
-		m_obj = nullptr;
+	ContainerBase(ContainerID id) : m_ID(id), m_IsEmpty(true), m_IsRefrigerated(false) {
+		m_Obj = nullptr;
 	}
 	virtual ~ContainerBase() = 0 {};
 
 	// Return true if refrigerated.
-	const bool isRefrigerated() const { return m_isRefrigerated; }
+	const bool isRefrigerated() const { return m_IsRefrigerated; }
 	// Return true if empty.
-	const bool isEmpty() const { return m_isEmpty; }
+	const bool isEmpty() const { return m_IsEmpty; }
 	// Return the type of the container
 	virtual const ContainerType getType() const = 0;
 
@@ -42,9 +42,9 @@ public:
 	template< typename Object >
 	const ObjectID storeObject(Object* object)
 	{
-		m_isEmpty = false;
-		m_obj = object;
-		return m_obj->getID();
+		m_IsEmpty = false;
+		m_Obj = object;
+		return m_Obj->getID();
 	}
 
 	// Return the object ID	
@@ -55,16 +55,16 @@ public:
 	StorableObject* const retrieveObject();
 
 	// Return an ID
-	ContainerID getId() const { return m_id; }
+	ContainerID getId() const { return m_ID; }
 
 	// Create a container.
 	static ContainerBase* CreateContainer(ContainerType type);
 
 protected:
-	ContainerID m_id;
-	bool m_isRefrigerated;
-	bool m_isEmpty;
-	StorableObject* m_obj;
+	ContainerID m_ID;
+	bool m_IsRefrigerated;
+	bool m_IsEmpty;
+	StorableObject* m_Obj;
 private:
-	static int m_containerCounter;
+	static int m_ContainerCounter;
 };

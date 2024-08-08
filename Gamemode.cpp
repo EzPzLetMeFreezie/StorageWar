@@ -10,16 +10,16 @@
 
 Gamemode::Gamemode()
 {
-	m_objectManager = new ObjectManager();
+	m_ObjectManager = new ObjectManager();
 }
 
 Gamemode::~Gamemode()
 {
-	for (auto player : m_players)
+	for (auto player : m_Players)
 	{
 		delete player;
 	}
-	delete m_objectManager;
+	delete m_ObjectManager;
 }
 
 void Gamemode::setupPlayers(short playerCount)
@@ -29,11 +29,11 @@ void Gamemode::setupPlayers(short playerCount)
 		static char buffer[10];
 		sprintf_s(buffer, "Player%0d", i);
 		Player* player = new Player(buffer);
-		player->allocateStorage(createStorage(m_nonRefridgerationContainerCount, m_refridgerationContainerCount));
+		player->allocateStorage(createStorage(m_NonRefridgerationContainerCount, m_RefridgerationContainerCount));
 
 		generateInitialStorageState(*player->getStorage());
 
-		m_players.push_back(player);
+		m_Players.push_back(player);
 	}
 }
 
@@ -43,7 +43,7 @@ int Gamemode::startGame()
 	do
 	{
 		// Each players play in turn
-		for (int playerIndex = 0; playerIndex < m_players.size(); ++playerIndex)
+		for (int playerIndex = 0; playerIndex < m_Players.size(); ++playerIndex)
 		{
 			if (winningPlayer = playerTakeTurn(playerIndex)) {
 				break;
@@ -58,31 +58,25 @@ int Gamemode::startGame()
 
 Player* Gamemode::playerTakeTurn(int playerIndex)
 {
-	// find opponent player index
-	int opponentIndex = playerIndex + 1;
-	if (opponentIndex >= m_players.size())
-	{
-		opponentIndex = 0;
-	}
 
-	Player* currentPlayer = m_players[playerIndex];
+	Player* currentPlayer = getPlayer(playerIndex);
+	Player* opponentPlayer = getOpponentPlayer(playerIndex);
 	std::printf("%s to play\n", currentPlayer->toString().c_str());
 
 	// spawn random object
-	StorableObject* object = m_objectManager->generateRandomObjectType();
+	StorableObject* object = m_ObjectManager->generateRandomObjectType();
 	std::printf("%s spawned\n", object->toString().c_str());
 
 	// player handle new object
 	if (!handleStorage(currentPlayer, object))
 	{
-		return m_players[opponentIndex];
+		return opponentPlayer;
 	}
 
 	// player send new object to opponent
-	Player* opponent = m_players[opponentIndex];
-	if (!handleStorage(opponent, pickObjectToSend(currentPlayer)))
+	if (!handleStorage(opponentPlayer, pickObjectToSend(currentPlayer)))
 	{
-		return m_players[playerIndex];
+		return currentPlayer;
 	}
 
 	// player end of turn
@@ -111,15 +105,34 @@ StorableObject* Gamemode::pickObjectToSend(Player* player)
 	StorableObject* retrievedObject = nullptr;
 	do {
 		player->displayStorage();
-		ObjectID idToRetrieve;
+		std::string idToRetrieve;
 		printf("Enter a valid ObjectID: ");
 		std::cin >> idToRetrieve;
-		retrievedObject = player->getStorage()->retrieveObject(idToRetrieve);
+		try {
+			retrievedObject = player->getStorage()->retrieveObject(std::stoi(idToRetrieve));
+		} catch (...) {
+			retrievedObject = nullptr;
+		}
 		if (!retrievedObject) {
-			std::printf("Invalid ObjectID %s. Please try again.\n", std::to_string(idToRetrieve).c_str());
+			std::printf("Invalid ObjectID %s. Please try again.\n", idToRetrieve.c_str());
 		}
 	} while (!retrievedObject);
 	return retrievedObject;
+}
+
+Player* Gamemode::getPlayer(int playerIndex)
+{
+	return m_Players[playerIndex];
+}
+
+Player* Gamemode::getOpponentPlayer(int playerIndex)
+{
+	int opponentIndex = playerIndex + 1;
+	if (opponentIndex >= m_Players.size())
+	{
+		opponentIndex = 0;
+	}
+	return getPlayer(opponentIndex);
 }
 
 Storage* Gamemode::createStorage(const short& nonRefrigeratedContainerCount, const short& refrigeratedContainerCount)
@@ -143,12 +156,12 @@ Storage* Gamemode::createStorage(const short& nonRefrigeratedContainerCount, con
 
 void Gamemode::setRefridgerationContainerCount(short count)
 {
-	m_refridgerationContainerCount = count;
+	m_RefridgerationContainerCount = count;
 }
 
 void Gamemode::setNonRefridgerationContainerCount(short count)
 {
-	m_nonRefridgerationContainerCount = count;
+	m_NonRefridgerationContainerCount = count;
 }
 
 void Gamemode::generateInitialStorageState(Storage& storage)

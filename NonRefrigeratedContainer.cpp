@@ -4,7 +4,7 @@
 NonRefrigeratedContainer::NonRefrigeratedContainer(ContainerID id)
 	: ContainerBase(id)
 {
-	m_isRefrigerated = false;
+	m_IsRefrigerated = false;
 }
 
 NonRefrigeratedContainer::~NonRefrigeratedContainer()
