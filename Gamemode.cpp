@@ -39,27 +39,24 @@ void Gamemode::setupPlayers(short playerCount)
 
 int Gamemode::startGame()
 {
-	bool isGameRunning = true;
-	int playerIndex = 0;
-	int winningPlayerIndex = 0xFFFFFFFF;
+	Player* winningPlayer = nullptr;
 	do
 	{
 		// Each players play in turn
-		for (playerIndex = 0; playerIndex < m_players.size(); ++playerIndex)
+		for (int playerIndex = 0; playerIndex < m_players.size(); ++playerIndex)
 		{
-			if (!playerTakeTurn(playerIndex, winningPlayerIndex)) {
-				isGameRunning = false;
+			if (winningPlayer = playerTakeTurn(playerIndex)) {
 				break;
 			}
 		}
-	} while (isGameRunning);
-	assert(winningPlayerIndex != 0xFFFFFFFF);
+	} while (!winningPlayer);
+	assert(winningPlayer);
 
-	std::printf("%s won the game!\n", m_players[winningPlayerIndex]->toString().c_str());
+	std::printf("%s won the game!\n", winningPlayer->toString().c_str());
 	return 0;
 }
 
-bool Gamemode::playerTakeTurn(int playerIndex, int& winningPlayerIndex)
+Player* Gamemode::playerTakeTurn(int playerIndex)
 {
 	// find opponent player index
 	int opponentIndex = playerIndex + 1;
@@ -78,21 +75,19 @@ bool Gamemode::playerTakeTurn(int playerIndex, int& winningPlayerIndex)
 	// player handle new object
 	if (!handleStorage(currentPlayer, object))
 	{
-		winningPlayerIndex = opponentIndex;
-		return false;
+		return m_players[opponentIndex];
 	}
 
 	// player send new object to opponent
 	Player* opponent = m_players[opponentIndex];
 	if (!handleStorage(opponent, pickObjectToSend(currentPlayer)))
 	{
-		winningPlayerIndex = playerIndex;
-		return false;
+		return m_players[playerIndex];
 	}
 
 	// player end of turn
 	std::printf("\n-------------------------\nEnd of turn\n-------------------------\n");
-	return true;
+	return nullptr;
 }
 
 bool Gamemode::handleStorage(Player* player, StorableObject* object)

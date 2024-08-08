@@ -1,5 +1,5 @@
 #include <vector>
-#include "player.h"
+#include "Player.h"
 #include "ObjectManager.h"
 
 #pragma once
@@ -17,7 +17,7 @@ private:
 	short m_nonRefridgerationContainerCount = 16;
 
 	void generateInitialStorageState(Storage& storage);
-	bool playerTakeTurn(int playerIndex, int& winningPlayerIndex);
+	Player* playerTakeTurn(int playerIndex);
 	bool handleStorage(Player* player, StorableObject* object);
 	StorableObject* pickObjectToSend(Player* player);
 	class Storage* createStorage(const short& nonRefrigeratedContainerCount, const short& refrigeratedContainerCount);
