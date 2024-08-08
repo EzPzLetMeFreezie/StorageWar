@@ -18,6 +18,8 @@ private:
 
 	void generateInitialStorageState(Storage& storage);
 	bool playerTakeTurn(int playerIndex, int& winningPlayerIndex);
+	bool handleStorage(Player* player, StorableObject* object);
+	StorableObject* pickObjectToSend(Player* player);
 	class Storage* createStorage(const short& nonRefrigeratedContainerCount, const short& refrigeratedContainerCount);
 
 public:

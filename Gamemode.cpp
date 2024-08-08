@@ -68,64 +68,63 @@ bool Gamemode::playerTakeTurn(int playerIndex, int& winningPlayerIndex)
 		opponentIndex = 0;
 	}
 
-	Player* p = m_players[playerIndex];
-	std::printf("%s to play\n", p->toString().c_str());
+	Player* currentPlayer = m_players[playerIndex];
+	std::printf("%s to play\n", currentPlayer->toString().c_str());
 
 	// spawn random object
 	StorableObject* object = m_objectManager->generateRandomObjectType();
 	std::printf("%s spawned\n", object->toString().c_str());
 
 	// player handle new object
+	if (!handleStorage(currentPlayer, object))
 	{
-		ObjectID objecID = p->storeObject(object);
-		if (objecID == INVALID_OBJECT_ID)
-		{
-			std::printf("%s was not able to store %s\n", p->toString().c_str(), object->toString().c_str());
-			winningPlayerIndex = opponentIndex;
-			return false;
-		}
-		else
-		{
-			std::printf("%s successfully stored the object.\n", p->toString().c_str());
-		}
+		winningPlayerIndex = opponentIndex;
+		return false;
 	}
-
-	// player pick object
-	StorableObject* objetToSend = nullptr;
-	std::printf("%s: Pick an object by ObjectID to send to your opponent\n", p->toString().c_str());
-	do {
-		p->displayStorage();
-		ObjectID idToRetrieve;
-		printf("Enter a valid ObjectID: ");
-		std::cin >> idToRetrieve;
-		StorableObject* const retrievedObject = p->getStorage()->retrieveObject(idToRetrieve);
-		if (!retrievedObject) {
-			std::printf("Invalid ObjectID %s. Please try again.\n", std::to_string(idToRetrieve).c_str());
-		}
-		else
-		{
-			objetToSend = retrievedObject;
-		}
-	} while (!objetToSend);
 
 	// player send new object to opponent
 	Player* opponent = m_players[opponentIndex];
+	if (!handleStorage(opponent, pickObjectToSend(currentPlayer)))
 	{
-		ObjectID objecID = opponent->storeObject(objetToSend);
-		if (objecID == INVALID_OBJECT_ID)
-		{
-			std::printf("%s was not able to store %s\n", opponent->toString().c_str(), objetToSend->toString().c_str());
-			winningPlayerIndex = playerIndex;
-			return false;
-		}
-		else
-		{
-			std::printf("%s successfully stored the object.\n", opponent->toString().c_str());
-		}
+		winningPlayerIndex = playerIndex;
+		return false;
 	}
+
 	// player end of turn
 	std::printf("\n-------------------------\nEnd of turn\n-------------------------\n");
 	return true;
+}
+
+bool Gamemode::handleStorage(Player* player, StorableObject* object)
+{
+	ObjectID objecID = player->storeObject(object);
+	if (objecID == INVALID_OBJECT_ID)
+	{
+		std::printf("%s was not able to store %s\n", player->toString().c_str(), object->toString().c_str());
+		return false;
+	}
+	else
+	{
+		std::printf("%s successfully stored the object.\n", player->toString().c_str());
+		return true;
+	}
+}
+
+StorableObject* Gamemode::pickObjectToSend(Player* player)
+{
+	std::printf("%s: Pick an object by ObjectID to send to your opponent\n", player->toString().c_str());
+	StorableObject* retrievedObject = nullptr;
+	do {
+		player->displayStorage();
+		ObjectID idToRetrieve;
+		printf("Enter a valid ObjectID: ");
+		std::cin >> idToRetrieve;
+		retrievedObject = player->getStorage()->retrieveObject(idToRetrieve);
+		if (!retrievedObject) {
+			std::printf("Invalid ObjectID %s. Please try again.\n", std::to_string(idToRetrieve).c_str());
+		}
+	} while (!retrievedObject);
+	return retrievedObject;
 }
 
 Storage* Gamemode::createStorage(const short& nonRefrigeratedContainerCount, const short& refrigeratedContainerCount)
