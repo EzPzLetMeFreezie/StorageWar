@@ -29,7 +29,7 @@ void Gamemode::setupPlayers(short playerCount)
 		static char buffer[10];
 		sprintf_s(buffer, "Player%0d", i);
 		Player* player = new Player(buffer);
-		player->allocateStorage(Storage::CreateStorage(m_nonRefridgerationContainerCount, m_refridgerationContainerCount));
+		player->allocateStorage(createStorage(m_nonRefridgerationContainerCount, m_refridgerationContainerCount));
 
 		generateInitialStorageState(*player->getStorage());
 
@@ -126,6 +126,25 @@ bool Gamemode::playerTakeTurn(int playerIndex, int& winningPlayerIndex)
 	// player end of turn
 	std::printf("\n-------------------------\nEnd of turn\n-------------------------\n");
 	return true;
+}
+
+Storage* Gamemode::createStorage(const short& nonRefrigeratedContainerCount, const short& refrigeratedContainerCount)
+{
+	Storage* storage = new Storage();
+
+	storage->addContainerPod(CT_Refrigerated, refrigeratedContainerCount);
+	for (int i = 0; i < refrigeratedContainerCount; i++)
+	{
+		storage->addContainer(CT_Refrigerated);
+	}
+	storage->addContainerPod(CT_NonRefrigerated, nonRefrigeratedContainerCount);
+
+	for (int i = 0; i < nonRefrigeratedContainerCount; i++)
+	{
+		storage->addContainer(CT_NonRefrigerated);
+	}
+
+	return storage;
 }
 
 void Gamemode::setRefridgerationContainerCount(short count)

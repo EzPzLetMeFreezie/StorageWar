@@ -30,7 +30,7 @@
     <ClCompile Include="StorageWar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="storage.cpp">
+    <ClCompile Include="Storage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
@@ -56,7 +56,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="storage.h">
+    <ClInclude Include="Storage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
@@ -89,9 +89,6 @@
     <ClInclude Include="IRefridgable.h">
       <Filter>Header Files\Objects\Refrigerated</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Gamemode.h">
       <Filter>Header Files\Gamemodes</Filter>
     </ClInclude>
@@ -103,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="NonRefrigeratedContainer.h">
       <Filter>Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -148,7 +148,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RefrigeratedContainer.cpp" />
     <ClCompile Include="StorableObject.cpp" />
-    <ClCompile Include="storage.cpp" />
+    <ClCompile Include="Storage.cpp" />
     <ClCompile Include="StorageWar.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,7 +167,7 @@
     <ClInclude Include="RefrigeratedMedicineObject.h" />
     <ClInclude Include="RegrigaratedFoodObject.h" />
     <ClInclude Include="StorableObject.h" />
-    <ClInclude Include="storage.h" />
+    <ClInclude Include="Storage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

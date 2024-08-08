@@ -10,7 +10,8 @@ Player::~Player()
 ObjectID Player::storeObject(StorableObject* object)
 {
 	assert(object);
-	return m_Storage->storeObject(object);
+	EContainerType containerType = (object->isRefrigerated()) ? EContainerType::Refrigerated : EContainerType::NonRefrigerated;
+	return m_Storage->storeObject(object, ContainerTypes[(char)containerType]);
 }
 
 void Player::displayStorage() const

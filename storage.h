@@ -9,6 +9,14 @@
 
 #pragma once
 
+struct Pod {
+	int limit;
+	ContainerType type;
+	std::list<ContainerBase*> containers;
+
+	Pod(ContainerType type, int count) : type(type), limit(count) {}
+};
+
 class Storage
 {
 public:
@@ -19,10 +27,15 @@ public:
 	Storage(Storage&& other);
 	Storage& operator=(Storage&& other);
 
-	static Storage* CreateStorage(const short& nonRefrigeratedContainerCount, const short& refrigeratedContainerCount);
+private:
+	std::map<ContainerID, ContainerBase*> m_Containers;
+	std::map<ContainerType, Pod*> m_Pods;
+	std::map<ContainerType, std::list<ContainerBase*>> m_EmptyContainers;
+	std::map<ObjectID, ContainerID> m_StoredObjects;
 
+public:
 	// Set the maximum container count.
-	void setMaxContainerCount(ContainerType type, int count);
+	void addContainerPod(ContainerType type, int count);
 	// add a container
 	const ContainerID addContainer(ContainerType type);
 	// remove a container
@@ -31,53 +44,10 @@ public:
 	void displayContainer() const;
 
 	// Store an object of a given type.
-	template< class TYPE >
-	const ObjectID storeObject(TYPE* object)
-	{
-		ObjectID storedID = INVALID_OBJECT_ID;
-		if (!object)
-		{
-			return storedID;
-		}
-
-		if (object->isRefrigerated())
-		{
-			for (auto elem : m_refrigeratedContainers)
-			{
-				if (elem->isEmpty())
-				{
-					storedID = elem->storeObject(object);
-					break;
-				}
-			}
-		}
-		else
-		{
-			for (auto elem : m_nonRefrigeratedContainers)
-			{
-				if (elem->isEmpty())
-				{
-					storedID = elem->storeObject(object);
-					break;
-				}
-			}
-		}
-
-		return storedID;
-	}
+	const ObjectID storeObject(StorableObject* object, ContainerType type);
 
 	// Return true if the object is in storage
 	const bool isObjectInStorage(ObjectID objectID) const;
 	// retrieve an object.
 	StorableObject* const retrieveObject(ObjectID objectID);
-
-private:
-	// number of container
-	std::map<ContainerType, int> m_Count;
-	// list of refrigerated container
-	std::list<ContainerBase*> m_refrigeratedContainers;
-	// list of non refrigerated container.
-	std::list<ContainerBase*> m_nonRefrigeratedContainers;
-
-	mutable std::vector<std::pair<ContainerID, int>> m_StatAccess;
 };
