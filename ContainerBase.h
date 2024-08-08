@@ -23,13 +23,13 @@ static std::string ContainerTypes[(char)(EContainerType::MAX)] = {
 #define CT_NonRefrigerated	CT(EContainerType::NonRefrigerated)
 #define CT_Refrigerated		CT(EContainerType::Refrigerated)
 
-class AbstractContainer
+class ContainerBase
 {
 public:
-	AbstractContainer(ContainerID id) : m_id(id), m_isEmpty(true), m_isRefrigerated(false) {
+	ContainerBase(ContainerID id) : m_id(id), m_isEmpty(true), m_isRefrigerated(false) {
 		m_obj = nullptr;
 	}
-	virtual ~AbstractContainer() = 0 {};
+	virtual ~ContainerBase() = 0 {};
 
 	// Return true if refrigerated.
 	const bool isRefrigerated() const { return m_isRefrigerated; }
@@ -58,7 +58,7 @@ public:
 	ContainerID getId() const { return m_id; }
 
 	// Create a container.
-	static AbstractContainer* CreateContainer(ContainerType type);
+	static ContainerBase* CreateContainer(ContainerType type);
 
 protected:
 	ContainerID m_id;
@@ -67,22 +67,4 @@ protected:
 	StorableObject* m_obj;
 private:
 	static int m_containerCounter;
-};
-
-class RefrigeratedContainer : public AbstractContainer
-{
-public:
-	RefrigeratedContainer(ContainerID id);
-	virtual ~RefrigeratedContainer() override;
-
-	virtual const ContainerType getType() const override;
-};
-
-class NonRefrigeratedContainer : public AbstractContainer
-{
-public:
-	NonRefrigeratedContainer(ContainerID id);
-	virtual ~NonRefrigeratedContainer() override;
-
-	virtual const ContainerType getType() const override;
 };

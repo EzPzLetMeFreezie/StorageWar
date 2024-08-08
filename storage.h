@@ -1,12 +1,13 @@
-#pragma once
-
-#include "container.h"
-#include "StorableObject.h"
 #include <list>
 #include <map>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include "StorableObject.h"
+#include "ContainerBase.h"
+
+#pragma once
 
 class Storage
 {
@@ -72,9 +73,9 @@ private:
 	// number of container
 	std::map<ContainerType, int> m_Count;
 	// list of refrigerated container
-	std::list<AbstractContainer*> m_refrigeratedContainers;
+	std::list<ContainerBase*> m_refrigeratedContainers;
 	// list of non refrigerated container.
-	std::list<AbstractContainer*> m_nonRefrigeratedContainers;
+	std::list<ContainerBase*> m_nonRefrigeratedContainers;
 
 	mutable std::vector<std::pair<ContainerID, int>> m_StatAccess;
 };

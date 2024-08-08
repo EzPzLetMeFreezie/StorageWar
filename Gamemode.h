@@ -19,6 +19,7 @@ private:
 
 	Storage createStorage(const short& nonRefrigeratedContainerCount, const short& refrigeratedContainerCount);
 	void generateInitialStorageState(Storage& storage);
+	bool playerTakeTurn(int playerIndex, int& winningPlayerIndex);
 
 public:
 	void setupPlayers(short playerCount);

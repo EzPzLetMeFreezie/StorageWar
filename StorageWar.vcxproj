@@ -141,25 +141,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="container.cpp" />
+    <ClCompile Include="ContainerBase.cpp" />
     <ClCompile Include="Gamemode.cpp" />
+    <ClCompile Include="NonRefrigeratedContainer.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="RefrigeratedContainer.cpp" />
     <ClCompile Include="StorableObject.cpp" />
     <ClCompile Include="storage.cpp" />
     <ClCompile Include="StorageWar.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="container.h" />
+    <ClInclude Include="ContainerBase.h" />
     <ClInclude Include="ElectronicObject.h" />
     <ClInclude Include="FoodObject.h" />
     <ClInclude Include="FurnitureObject.h" />
     <ClInclude Include="Gamemode.h" />
     <ClInclude Include="IRefridgable.h" />
     <ClInclude Include="MedicineObject.h" />
+    <ClInclude Include="NonRefrigeratedContainer.h" />
     <ClInclude Include="ObjectBase.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="RefrigeratedContainer.h" />
     <ClInclude Include="RefrigeratedMedicineObject.h" />
     <ClInclude Include="RegrigaratedFoodObject.h" />
     <ClInclude Include="StorableObject.h" />

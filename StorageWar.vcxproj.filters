@@ -22,15 +22,15 @@
     <Filter Include="Header Files\Gamemodes">
       <UniqueIdentifier>{809e5db5-c1d4-4b25-a271-30cd91e0dc44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Containers">
+      <UniqueIdentifier>{0b872e14-0bc2-42f4-ab85-7b40720b3cce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StorageWar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="storage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="container.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
@@ -45,12 +45,18 @@
     <ClCompile Include="StorableObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ContainerBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RefrigeratedContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NonRefrigeratedContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="storage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="container.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
@@ -88,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="Gamemode.h">
       <Filter>Header Files\Gamemodes</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerBase.h">
+      <Filter>Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="RefrigeratedContainer.h">
+      <Filter>Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="NonRefrigeratedContainer.h">
+      <Filter>Header Files\Containers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

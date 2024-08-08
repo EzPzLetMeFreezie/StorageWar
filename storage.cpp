@@ -1,5 +1,6 @@
-#include "storage.h"
 #include <algorithm>
+
+#include "storage.h"
 
 Storage::Storage()
 {
@@ -96,7 +97,7 @@ const ContainerID Storage::addContainer(ContainerType type)
 		return 	INVALID_CONTAINER_ID;
 	}
 
-	AbstractContainer* container = AbstractContainer::CreateContainer(type);
+	ContainerBase* container = ContainerBase::CreateContainer(type);
 
 	if (container == nullptr)
 	{
@@ -147,7 +148,7 @@ const bool Storage::removeContainer(ContainerID id)
 
 const bool Storage::isObjectInStorage(ObjectID objectID) const
 {
-	auto isInStoragePred = [=](AbstractContainer* container) {
+	auto isInStoragePred = [=](ContainerBase* container) {
 		if (!container)
 		{
 			return false;

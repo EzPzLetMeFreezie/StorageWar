@@ -1,13 +1,10 @@
-#include "container.h"
-#include "player.h"
-#include "storage.h"
-#include "Gamemode.h"
-
 #include <assert.h>
 #include <list>
 #include <random>
 #include <stdio.h>
 #include <iostream>
+
+#include "Gamemode.h"
 
 #define NON_REFREGIRATED_CONTAINER_COUNT	16
 #define REFREGIRATED_CONTAINER_COUNT		8
