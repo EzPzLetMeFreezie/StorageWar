@@ -24,7 +24,7 @@ private:
 
 public:
 	void setupPlayers(short playerCount);
-	int startGame();
+	void startGame();
 	void setRefridgerationContainerCount(short count);
 	void setNonRefridgerationContainerCount(short count);
 	Player* getPlayer(int playerIndex);

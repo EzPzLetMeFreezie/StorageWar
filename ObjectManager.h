@@ -2,8 +2,6 @@
 
 #pragma once
 
-using namespace std;
-
 class ObjectManager
 {
 public:
@@ -11,7 +9,7 @@ public:
 	~ObjectManager();
 private:
 	int m_id_count = 0;
-	vector<class StorableObject*> m_objects;
+	std::vector<class StorableObject*> m_objects;
 public:
 	class StorableObject* generateRandomObjectType();
 };

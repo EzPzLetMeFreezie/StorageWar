@@ -70,6 +70,7 @@ const ObjectID Storage::storeObject(StorableObject* object, ContainerType type)
 	ContainerBase* container = m_EmptyContainers[type].back();
 	m_StoredObjects[container->storeObject(object)] = container->getId();
 	m_EmptyContainers[type].pop_back();
+	return object->getID();
 }
 
 const bool Storage::isObjectInStorage(ObjectID objectID) const
@@ -92,6 +93,9 @@ void Storage::displayContainer() const
 	std::printf("Display the content the storage\n");
 	for (auto podIt = m_Pods.rbegin(); podIt != m_Pods.rend(); podIt++) {
 		Pod* pod = podIt->second;
+		if (podIt != m_Pods.rbegin()) {
+			std::printf("\n");
+		}
 		std::printf("%s content:\n", pod->type.c_str());
 		for (auto container : pod->containers) {
 			if (container->getStoredObjectID() != INVALID_OBJECT_ID) {

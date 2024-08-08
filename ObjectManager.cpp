@@ -11,6 +11,10 @@ ObjectManager::ObjectManager()
 
 ObjectManager::~ObjectManager()
 {
+	for (auto object : m_objects)
+	{
+		delete object;
+	}
 }
 
 StorableObject* ObjectManager::generateRandomObjectType()
@@ -50,7 +54,7 @@ StorableObject* ObjectManager::generateRandomObjectType()
 		break;
 	}
 
-	//std::printf(randomObject->isRefrigerated() ? "Refridged\n" : "not Refrided\n");
 	assert(randomObject);
+	m_objects.push_back(randomObject);
 	return randomObject;
 }

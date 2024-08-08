@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <list>
 #include <random>
-#include <stdio.h>
+#include <sstream>
 #include <iostream>
 
 #include "Gamemode.h"
@@ -37,7 +37,7 @@ void Gamemode::setupPlayers(short playerCount)
 	}
 }
 
-int Gamemode::startGame()
+void Gamemode::startGame()
 {
 	Player* winningPlayer = nullptr;
 	do
@@ -53,7 +53,6 @@ int Gamemode::startGame()
 	assert(winningPlayer);
 
 	std::printf("%s won the game!\n", winningPlayer->toString().c_str());
-	return 0;
 }
 
 Player* Gamemode::playerTakeTurn(int playerIndex)

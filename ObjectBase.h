@@ -2,6 +2,8 @@
 
 #include <string>
 
+#pragma warning( disable : 4250 )
+
 using ObjectID = int;
 using ObjectTypeName = std::string;
 static const ObjectID INVALID_OBJECT_ID = -1;

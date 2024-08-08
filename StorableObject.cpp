@@ -29,10 +29,9 @@ StorableObject* const StorableObject::CreateObject(EObjectType objectType, Objec
 		return new RefrigeratedMedicineObject(objectID);
 		break;
 	case EObjectType::MAX:
-		break;
 	case EObjectType::INVALID:
-		break;
 	default:
+		return nullptr;
 		break;
 	}
 }

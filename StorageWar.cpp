@@ -25,5 +25,7 @@ int main()
 	gamemode->setNonRefridgerationContainerCount(NON_REFREGIRATED_CONTAINER_COUNT);
 	gamemode->setRefridgerationContainerCount(REFREGIRATED_CONTAINER_COUNT);
 	gamemode->setupPlayers(PLAYER_COUNT);
-	return gamemode->startGame();
+	gamemode->startGame();
+	delete gamemode;
+	return 0;
 }
